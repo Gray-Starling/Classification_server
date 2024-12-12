@@ -13,7 +13,7 @@ async def download_data(file_path):
             async with aiohttp.ClientSession() as session:
                 async with session.get(link) as response:
                     if response.status == 200:
-                        total_size = int(response.headers.get('Content-Length', 0))  # Получаем общий размер файла
+                        total_size = int(response.headers.get('Content-Length', 0))
                         downloaded_size = 0
 
                         with open(file_path, 'wb') as f:
@@ -23,9 +23,8 @@ async def download_data(file_path):
                                     print(f"\nThe file has been successfully downloaded and saved to the path: {file_path}")
                                     break
                                 f.write(chunk)
-                                downloaded_size += len(chunk)  # Увеличиваем количество загруженных байтов
+                                downloaded_size += len(chunk)
 
-                                # Выводим прогресс в одну строку
                                 if total_size > 0:
                                     print(f"Downloaded {downloaded_size} of {total_size} bytes", end='\r')
                     else:

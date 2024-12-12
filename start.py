@@ -2,13 +2,14 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from tools.train_model import train_model
 from tools.get_predict import get_predict
-from config import SERVER_PORT
+from config import SERVER_PORT, PREDICT_API
 import os
 import asyncio
 
 app = Flask(__name__)
 CORS(app)
 PORT = SERVER_PORT
+API = PREDICT_API
 
 model_path = "./model/model.joblib"
 
@@ -24,7 +25,7 @@ async def start():
                 await app.run(port=PORT)
             except Exception as e:
                 print(e)
-                
+
         except Exception as e:
             print(e)
     else:
@@ -36,7 +37,7 @@ async def start():
             print(e)
 
 
-@app.route('/predict', methods=['POST'])
+@app.route(API, methods=['POST'])
 async def predict():
     data = request.get_json()
 

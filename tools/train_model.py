@@ -23,40 +23,40 @@ def preprocess_data(file_path):
     else:
         print("GPU not available, CPU used")
 
-    print("Считывание csv файла...")
+    print("Reading csv file...")
     df = pd.read_csv(file_path)
 
-    print("Удаление дубликатов...")
+    print("Removing duplicates...")
     df = del_duplicates(df)
 
-    print("Удаление не нужных колонок...")
+    print("Removing unnecessary columns...")
     df = del_columns(df)
 
-    print("Преобразование текста к нижнему регистру...")
+    print("Convert text to lowercase...")
     df = to_lower_str(df)
 
-    print("Преобразование категорий...")
+    print("Transforming categories...")
     df = mapping_category(df)
 
-    print("Удаление пустых строк с текстом...")
+    print("Removing empty lines of text...")
     df = del_empty_text(df)
 
-    print("Склеивание текста...")
+    print("Text gluing...")
     df = text_gluing(df)
 
-    print("Предобработка текста...")
+    print("Text preprocessing...")
     df = preprocess_text(df)
 
-    print("Очистка от кастомных стопслов...")
+    print("Cleaning up custom stopwords...")
     df = cleaning_custom_stopwords(df)
 
-    print("Балансировка данных...")
+    print("Data Balancing...")
     df = balancing_data(df)
 
-    print("Балансировка длины текста...")
+    print("Balancing text length...")
     df = del_big_text(df)
 
-    print("Преобразование категорий к числовому значению...")
+    print("Convert categories to numeric value...")
     df = category_encoding(df)
 
     return df
@@ -80,9 +80,9 @@ async def download_file(url, dest):
                         if total_size > 0:
                             print(
                                 f"Downloaded {downloaded_size} of {total_size} bytes", end='\r')
-                print(f"Файл скачан: {dest}")
+                print(f"File downloaded: {dest}")
             else:
-                print(f"Ошибка при скачивании: {response.status}")
+                print(f"Error while downloading: {response.status}")
 
 
 def text_to_vector(text, model):
@@ -110,10 +110,10 @@ async def train(df):
         os.makedirs(temp_dir)
 
     if not os.path.exists(file_path):
-        print("Файл не найден, начинаем скачивание...")
+        print("File not found, starting download...")
         await download_file(url, file_path)
     else:
-        print("Уже скачан")
+        print("The file has already been downloaded.")
 
     navec = Navec.load(file_path)
 
@@ -125,7 +125,7 @@ async def train(df):
 
     dump(classifier, 'model/model.joblib')
 
-    print("Модель обучена и готова к использованию")
+    print("The model is trained and ready for use.")
 
 
 async def train_model():
